@@ -1,3 +1,6 @@
 [submodule "PowerLoader"]
     path = git/PowerLoader
     url = https://github.com/pinuke/PowerLoader
+[submodule "git/PowerLoader"]
+	path = git/PowerLoader
+	url = https://github.com/pinuke/PowerLoader
