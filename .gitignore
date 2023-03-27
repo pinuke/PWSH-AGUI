@@ -1,1 +1,6 @@
+# IDEs:
 .vscode/
+
+# PowerLoader's Library Files:
+nuget/
+psgallery/
