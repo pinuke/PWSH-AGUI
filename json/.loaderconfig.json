@@ -1,0 +1,11 @@
+{
+    "Destinations" : {
+        "PSGallery" : "psgallery",
+        "NuGet" : "nuget"
+    },
+    "Manifests" : {
+        "Local" : "json/local.json",
+        "PSGallery" : "json/psgallery.json",
+        "NuGet" : "json/nuget.json"
+    }
+}

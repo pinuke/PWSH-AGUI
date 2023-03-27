@@ -1,0 +1,6 @@
+[
+    "WindowsBase",
+    "System.Windows.Forms",
+    "System.Drawing",
+    "PresentationFramework"
+]

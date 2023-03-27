@@ -1,0 +1,95 @@
+{
+    "System.ComponentModel.Annotations" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "JetBrains.Annotations" : {
+        "target" : "net20",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Remote.Protocol" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Buffers" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Numerics.Vectors" : {
+        "target" : "net46",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Runtime.CompilerServices.Unsafe" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Runtime.InteropServices.WindowsRuntime" : {
+        "target" : "net45",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Threading.Tasks.Extensions" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Reactive" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Memory" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Runtime.InteropServices.RuntimeInformation" : {
+        "target" : "net45",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.ValueTuple" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia" : {
+        "target" : "net461",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Native" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "HarfBuzzSharp.NativeAssets.Win32" : {
+        "natives" : [ "*.dll" ]
+    },
+    "HarfBuzzSharp" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "SkiaSharp.NativeAssets.Win32" : {
+        "natives" : [ "*.dll" ]
+    },
+    "SkiaSharp" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Skia" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "System.Drawing.Common" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Angle.Windows.Natives" : {
+        "natives" : [ "*.dll" ]
+    },
+    "Avalonia.Win32" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Desktop" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    },
+    "Avalonia.Markup.Xaml.Loader" : {
+        "target" : "netstandard2.0",
+        "assemblies" : [ "*.dll" ]
+    }
+}
