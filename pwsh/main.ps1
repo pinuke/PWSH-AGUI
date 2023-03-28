@@ -15,3 +15,7 @@ $LoadArgs = @{
 & "$Root/git/PowerLoader/pwsh/load.ps1" @LoadArgs
 
 & "$Root/pwsh/threading/runtimes.ps1"
+
+& "$Root/pwsh/initializers/winform.ps1"
+& "$Root/pwsh/initializers/wpf.ps1"
+& "$Root/pwsh/initializers/avalonia.ps1"
