@@ -1,4 +1,4 @@
-Initialize-Runtime -Name "Avalonia" -Script {
+Initialize-AsyncRuntime -Name "Avalonia" -Script {
     $Builder = [Avalonia.AppBuilder]::Configure[Avalonia.Application]()
     $Builder = [Avalonia.AppBuilderDesktopExtensions]::UsePlatformDetect( $Builder )
 
