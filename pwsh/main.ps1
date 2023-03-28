@@ -14,4 +14,4 @@ $LoadArgs = @{
 
 & "$Root/git/PowerLoader/pwsh/load.ps1" @LoadArgs
 
-& "$Root/pwsh/runtimes.ps1"
+& "$Root/pwsh/threading/runtimes.ps1"

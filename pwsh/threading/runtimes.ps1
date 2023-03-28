@@ -1,5 +1,5 @@
 $Root = If ( $TestRoot ) { $TestRoot } else {
-    If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/.." } else { Resolve-Path "./.." }
+    If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../.." } else { Resolve-Path "./../.." }
 }
 
 $global:Runtimes = @{}
@@ -20,7 +20,7 @@ function global:Initialize-AsyncRuntime{
     }
 
     If( !$SessionProxies.PostDispatcher ){
-        $SessionProxies.PostDispatcher = [scriptblock]::Create(( Import-Contents -Path "$Root/pwsh/postdispatcher.ps1" ))
+        $SessionProxies.PostDispatcher = [scriptblock]::Create(( Import-Contents -Path "$Root/pwsh/threading/postdispatcher.ps1" ))
     }
     $SessionProxies.Runtimes = $Runtimes
     $SessionProxies.RuntimeName = $Name
