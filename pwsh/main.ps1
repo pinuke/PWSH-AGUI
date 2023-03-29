@@ -19,3 +19,7 @@ $LoadArgs = @{
 & "$Root/pwsh/initializers/winform.ps1"
 & "$Root/pwsh/initializers/wpf.ps1"
 & "$Root/pwsh/initializers/avalonia.ps1"
+
+& "$Root/pwsh/helpers/winform/helpers.ps1"
+& "$Root/pwsh/helpers/wpf/helpers.ps1"
+& "$Root/pwsh/helpers/avalonia/helpers.ps1"
