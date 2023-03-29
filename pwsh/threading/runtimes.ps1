@@ -17,6 +17,8 @@ function global:Initialize-AsyncRuntime{
     If( $Runtimes[ $Name ] ){
         Write-Host "$Name runtime already initialized!" -BackgroundColor DarkRed -ForegroundColor White
         return;
+    } else {
+        $Runtimes[ $Name ] = @{}
     }
 
     If( !$SessionProxies.PostDispatcher ){
@@ -27,6 +29,7 @@ function global:Initialize-AsyncRuntime{
     
     $Runspace = [System.Management.Automation.Runspaces.RunspaceFactory]::CreateRunspace( $Host )
     $Runspace.ApartmentState = "STA"
+    $Runspace.Name = $Name
     $Runspace.ThreadOptions = "ReuseThread"
     $Runspace.Open() | Out-Null
 
@@ -43,7 +46,7 @@ function global:Initialize-AsyncRuntime{
     $Thread.BeginInvoke()
 
     Write-Host "Awaiting runtime initialization for $Name..."
-    While( !$Runspace[ $Name ].Dispatcher ){}
+    While( !$Runtimes[ $Name ].Dispatcher ){}
     Write-Host " - done!"
 
 }
