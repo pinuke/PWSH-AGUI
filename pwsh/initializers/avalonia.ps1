@@ -1,4 +1,7 @@
-Initialize-AsyncRuntime -Name "Avalonia" -Script {
+Initialize-AsyncRuntime -Name "Avalonia" -InitializerScript {
+
+    $Scope = @{}
+
     $Builder = [Avalonia.AppBuilder]::Configure[Avalonia.Application]()
     $Builder = [Avalonia.AppBuilderDesktopExtensions]::UsePlatformDetect( $Builder )
 
@@ -7,7 +10,7 @@ Initialize-AsyncRuntime -Name "Avalonia" -Script {
 
     $Builder = $Builder.SetupWithLifetime( $Lifetime )
 
-    $App = $Appbuilder.Instance
+    $App = $Builder.Instance
 
     Invoke-Command $PostDispatcher -ArgumentList @( [Avalonia.Threading.Dispatcher]::UIThread )
 

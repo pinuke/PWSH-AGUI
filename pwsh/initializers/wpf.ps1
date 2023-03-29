@@ -1,4 +1,7 @@
-Initialize-AsyncRuntime -Name "WPF" -Script {
+Initialize-AsyncRuntime -Name "WPF" -InitializerScript {
+    
+    $Scope = @{}
+    
     $App = [System.Windows.Application]::new()
 
     Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Application]::Current.Dispatcher )
