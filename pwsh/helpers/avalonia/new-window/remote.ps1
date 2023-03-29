@@ -1,6 +1,4 @@
-$Runtimes[ "Avalonia" ].Windows = @{}
-
-function New-Window{
+$Scope["New-Window"] = {
     param(
         [Parameter(Mandatory=$true)]
         [string] $Xaml

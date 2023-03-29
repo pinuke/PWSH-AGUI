@@ -1,6 +1,4 @@
-$Runtimes[ "WPF" ].Windows = @{}
-
-function New-Window{
+$Scope["New-Window"] = {
     param(
         [Parameter(Mandatory=$true)]
         [string] $Xaml
@@ -12,7 +10,7 @@ function New-Window{
     $manager.AddNamespace( "x", "http://schemas.microsoft.com/winfx/2006/xaml" )
 
     $reader = New-Object System.Xml.XmlNodeReader $Xaml
-    $window = [Window.Markup.XamlReader]::Load( $reader )
+    $window = [Windows.Markup.XamlReader]::Load( $reader )
 
     $Runtimes[ "WPF" ].Windows.Add( $window ) | Out-Null
 
