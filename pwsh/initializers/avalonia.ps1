@@ -28,3 +28,5 @@ Initialize-AsyncRuntime -Name "Avalonia" -InitializerScript {
 
     [Avalonia.Controls.DesktopApplicationExtensions]::Run( $App, $CTS.Token )
 } | Out-Null
+
+$Runtimes[ "Avalonia" ].Windows = New-Object System.Collections.ArrayList

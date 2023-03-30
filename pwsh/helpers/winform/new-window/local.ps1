@@ -1,6 +1,3 @@
-$Runtimes[ "WinForm" ].Windows = New-Object System.Collections.ArrayList
-# todo: add factory on remote for auto setting this
-
 function global:New-WinFormWindow{
     param(
         [Parameter(Mandatory=$true)]

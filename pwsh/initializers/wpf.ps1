@@ -8,3 +8,5 @@ Initialize-AsyncRuntime -Name "WPF" -InitializerScript {
 
     $App.Run()
 } | Out-Null
+
+$Runtimes[ "WPF" ].Windows = New-Object System.Collections.ArrayList

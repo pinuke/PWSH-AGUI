@@ -7,3 +7,6 @@ Initialize-AsyncRuntime -Name "WinForm" -InitializerScript {
     [System.Windows.Forms.Application]::EnableVisualStyles()
     [System.Windows.Forms.Application]::Run()
 } | Out-Null
+
+$Runtimes[ "WinForm" ].Windows = New-Object System.Collections.ArrayList
+# todo: add factory on remote for auto setting this
