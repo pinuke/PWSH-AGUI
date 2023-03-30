@@ -46,6 +46,10 @@ function global:Initialize-AsyncRuntime{
     $Runtimes[ $Name ].Ready = $false
 
     $Thread.AddScript([System.Action]{
+        
+        # Since application loops can't add to this scope, providing a scope hashtable to make do
+        $Scope = @{}
+
         $Runtimes[ $Name ].Dispatcher = Invoke-Command $InitializerScript
         $Runtimes[ $Name ].Ready = $true
     }) | Out-Null
