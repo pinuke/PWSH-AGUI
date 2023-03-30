@@ -1,12 +1,18 @@
-Initialize-AsyncRuntime -Name "WPF" -InitializerScript {
+Initialize-AsyncRuntime -Name "WPF" -Factory {
     
-    $Scope = @{}
-    
+    If( [System.Windows.Application]::Current ){
+        # WPF thread restriction:
+        # - WPF can only access/return the current dispatcher, on the thread it was created.
+        # Workaround: shutdown and restart the application.
+        [System.Windows.Application]::Current.Shutdown()
+    }
+
     $App = [System.Windows.Application]::new()
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Application]::Current.Dispatcher )
+    # Return the thread's current dispatcher
+    [System.Windows.Application]::Current.Dispatcher
 
-    $App.Run()
+    $App.Run() | Out-Null
 } | Out-Null
 
 $Runtimes[ "WPF" ].Windows = New-Object System.Collections.ArrayList

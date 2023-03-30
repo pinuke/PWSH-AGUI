@@ -1,11 +1,10 @@
-Initialize-AsyncRuntime -Name "WinForm" -InitializerScript {
+Initialize-AsyncRuntime -Name "WinForm" -Factory {
 
-    $Scope = @{}
+    # Return the thread's current dispatcher
+    [System.Windows.Threading.Dispatcher]::CurrentDispatcher
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Threading.Dispatcher]::CurrentDispatcher )
-
-    [System.Windows.Forms.Application]::EnableVisualStyles()
-    [System.Windows.Forms.Application]::Run()
+    [System.Windows.Forms.Application]::EnableVisualStyles() | Out-Null
+    [System.Windows.Forms.Application]::Run() | Out-Null
 } | Out-Null
 
 $Runtimes[ "WinForm" ].Windows = New-Object System.Collections.ArrayList
