@@ -2,7 +2,7 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
     If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../.." } else { Resolve-Path "./../.." }
 }
 
-$global:Runtimes = @{}
+$global:Runtimes = [System.Collections.Hashtable]::Synchronized(@{})
 
 function global:Initialize-AsyncRuntime{
     param(
@@ -34,6 +34,8 @@ function global:Initialize-AsyncRuntime{
     } else {
         $Runtimes[ $Name ] = @{}
     }
+
+    $SessionProxies = [System.Collections.Hashtable]::Synchronized( $SessionProxies )
     
     $SessionProxies.Runtimes = $Runtimes
     $SessionProxies.RuntimeName = $Name
@@ -54,27 +56,22 @@ function global:Initialize-AsyncRuntime{
     $Thread.Runspace = $Runspace
     $Runtimes[ $Name ].Runspace = $Thread
 
-    $Runtimes[ $Name ].Ready = $false
-
-    $Thread.AddScript([System.Action]{
+    $Thread.AddScript({
         
         # Since application loops can't add to this scope, providing a scope hashtable to make do
         $Scope = @{}
 
-        $local:InitializerScript = $Factory
+        $local:InitializerScript = [scriptblock]::Create($Factory.ToString())
         $Factory = $null
 
-        $Runtimes[ $Name ].Dispatcher = Invoke-Command $InitializerScript
-        $Runtimes[ $Name ].Ready = $true
+        Invoke-Command $InitializerScript | ForEach-Object {
+            $Runtimes[ $RuntimeName ].Dispatcher = $_
+        }
     }) | Out-Null
-    $Thread.BeginInvoke()
+    $OutputTask = $Thread.BeginInvoke()
 
     Write-Host "Awaiting runtime initialization for $Name..."
-    While( !$Runtimes[ $Name ].Ready && !$Runtimes[ $Name ].Dispatcher ){}
+    # System.Threading.Tasks.TaskStatus.RanToCompletion
+    While( !$OutputTask.IsCompleted -and !$Runtimes[ $Name ].ContainsKey( "Dispatcher" ) ){}
     Write-Host " - done!"
-
-    If( !$Runtimes[ $Name ].Dispatcher ){
-        $Runtimes[ $Name ].Remove('Dispatcher')
-    }
-    $Runtimes[ $Name ].Remove('Ready')
 }
