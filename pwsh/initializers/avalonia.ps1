@@ -10,7 +10,8 @@ Initialize-AsyncRuntime -Name "Avalonia" -Factory {
 
     $App = $Builder.Instance
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [Avalonia.Threading.Dispatcher]::UIThread ) | Out-Null
+    # Return the UI thread dispatcher
+    [Avalonia.Threading.Dispatcher]::UIThread
 
     $Themes = @{
         "Default" = [Avalonia.Markup.Xaml.Styling.StyleInclude]::new( [System.Uri] $null )

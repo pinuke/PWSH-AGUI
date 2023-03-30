@@ -2,7 +2,8 @@ Initialize-AsyncRuntime -Name "WPF" -Factory {
     
     $App = [System.Windows.Application]::new()
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Application]::Current.Dispatcher ) | Out-Null
+    # Return the thread's current dispatcher
+    [System.Windows.Application]::Current.Dispatcher
 
     $App.Run() | Out-Null
 } | Out-Null

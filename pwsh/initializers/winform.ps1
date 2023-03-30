@@ -1,6 +1,7 @@
 Initialize-AsyncRuntime -Name "WinForm" -Factory {
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Threading.Dispatcher]::CurrentDispatcher ) | Out-Null
+    # Return the thread's current dispatcher
+    [System.Windows.Threading.Dispatcher]::CurrentDispatcher
 
     [System.Windows.Forms.Application]::EnableVisualStyles() | Out-Null
     [System.Windows.Forms.Application]::Run() | Out-Null
