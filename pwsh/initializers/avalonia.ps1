@@ -1,7 +1,5 @@
 Initialize-AsyncRuntime -Name "Avalonia" -InitializerScript {
 
-    $Scope = @{}
-
     $Builder = [Avalonia.AppBuilder]::Configure[Avalonia.Application]()
     $Builder = [Avalonia.AppBuilderDesktopExtensions]::UsePlatformDetect( $Builder )
 
@@ -12,7 +10,7 @@ Initialize-AsyncRuntime -Name "Avalonia" -InitializerScript {
 
     $App = $Builder.Instance
 
-    Invoke-Command $PostDispatcher -ArgumentList @( [Avalonia.Threading.Dispatcher]::UIThread )
+    Invoke-Command $PostDispatcher -ArgumentList @( [Avalonia.Threading.Dispatcher]::UIThread ) | Out-Null
 
     $Themes = @{
         "Default" = [Avalonia.Markup.Xaml.Styling.StyleInclude]::new( [System.Uri] $null )
@@ -21,12 +19,12 @@ Initialize-AsyncRuntime -Name "Avalonia" -InitializerScript {
     $Themes.Default.Source = [System.Uri]::new( "avares://Avalonia.Themes.Default/DefaultTheme.xaml" )
     $Themes.BaseLight.Source = [System.Uri]::new( "avares://Avalonia.Themes.Default/Accents/BaseLight.xaml" )
 
-    $App.Styles.Add( $Themes.Default )
-    $App.Styles.Add( $Themes.BaseLight )
+    $App.Styles.Add( $Themes.Default ) | Out-Null
+    $App.Styles.Add( $Themes.BaseLight ) | Out-Null
 
     $CTS = [System.Threading.CancellationTokenSource]::new()
 
-    [Avalonia.Controls.DesktopApplicationExtensions]::Run( $App, $CTS.Token )
+    [Avalonia.Controls.DesktopApplicationExtensions]::Run( $App, $CTS.Token ) | Out-Null
 } | Out-Null
 
 $Runtimes[ "Avalonia" ].Windows = New-Object System.Collections.ArrayList
