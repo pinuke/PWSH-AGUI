@@ -34,10 +34,7 @@ function global:Initialize-AsyncRuntime{
     } else {
         $Runtimes[ $Name ] = @{}
     }
-
-    If( !$SessionProxies.PostDispatcher ){
-        $SessionProxies.PostDispatcher = [scriptblock]::Create(( Import-Contents -Path "$Root/pwsh/threading/postdispatcher.ps1" ))
-    }
+    
     $SessionProxies.Runtimes = $Runtimes
     $SessionProxies.RuntimeName = $Name
     $SessionProxies.Factory = $Factory
