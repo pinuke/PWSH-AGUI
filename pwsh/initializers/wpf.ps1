@@ -1,5 +1,12 @@
 Initialize-AsyncRuntime -Name "WPF" -Factory {
     
+    If( [System.Windows.Application]::Current ){
+        # WPF thread restriction:
+        # - WPF can only access/return the current dispatcher, on the thread it was created.
+        # Workaround: shutdown and restart the application.
+        [System.Windows.Application]::Current.Shutdown()
+    }
+
     $App = [System.Windows.Application]::new()
 
     # Return the thread's current dispatcher
