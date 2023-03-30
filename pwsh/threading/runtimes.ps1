@@ -26,6 +26,7 @@ function global:Initialize-AsyncRuntime{
     }
     $SessionProxies.Runtimes = $Runtimes
     $SessionProxies.RuntimeName = $Name
+    $SessionProxies.InitializerScript = $InitializerScript
     
     $Runspace = [System.Management.Automation.Runspaces.RunspaceFactory]::CreateRunspace( $Host )
     $Runspace.ApartmentState = "STA"
@@ -42,11 +43,20 @@ function global:Initialize-AsyncRuntime{
     $Thread.Runspace = $Runspace
     $Runtimes[ $Name ].Runspace = $Thread
 
-    $Thread.AddScript( $InitializerScript ) | Out-Null
+    $Runtimes[ $Name ].Ready = $false
+
+    $Thread.AddScript([System.Action]{
+        $Runtimes[ $Name ].Dispatcher = Invoke-Command $InitializerScript
+        $Runtimes[ $Name ].Ready = $true
+    }) | Out-Null
     $Thread.BeginInvoke()
 
     Write-Host "Awaiting runtime initialization for $Name..."
-    While( !$Runtimes[ $Name ].Dispatcher ){}
+    While( !$Runtimes[ $Name ].Ready && !$Runtimes[ $Name ].Dispatcher ){}
     Write-Host " - done!"
 
+    If( !$Runtimes[ $Name ].Dispatcher ){
+        $Runtimes[ $Name ].Remove('Dispatcher')
+    }
+    $Runtimes[ $Name ].Remove('Ready')
 }
