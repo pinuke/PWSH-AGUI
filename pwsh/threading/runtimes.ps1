@@ -6,13 +6,27 @@ $global:Runtimes = @{}
 
 function global:Initialize-AsyncRuntime{
     param(
-        [Parameter(Mandatory=$true)]
         [string] $Name,
         [Parameter(Mandatory=$true)]
         [scriptblock] $InitializerScript,
         [System.Collections.Hashtable]
         $SessionProxies = @{}
     )
+
+    If( !$Name ){
+        $Index = $Runtimes.Keys |
+            Where-Object { $_ -match "AsyncRuntime\d+$" } |
+            Select-String -Pattern "\d+$" |
+            ForEach-Object { $_.Matches.Value } |
+            Sort-Object -Descending |
+            Select-Object -First 1
+
+        If( $Index ){
+            $Name = "AsyncRuntime$($Index + 1)"
+        } else {
+            $Name = "AsyncRuntime0"
+        }
+    }
 
     If( $Runtimes[ $Name ] ){
         Write-Host "$Name runtime already initialized!" -BackgroundColor DarkRed -ForegroundColor White
