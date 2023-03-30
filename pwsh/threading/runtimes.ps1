@@ -8,7 +8,7 @@ function global:Initialize-AsyncRuntime{
     param(
         [string] $Name,
         [Parameter(Mandatory=$true)]
-        [scriptblock] $InitializerScript,
+        [scriptblock] $Factory,
         [System.Collections.Hashtable]
         $SessionProxies = @{}
     )
@@ -40,7 +40,7 @@ function global:Initialize-AsyncRuntime{
     }
     $SessionProxies.Runtimes = $Runtimes
     $SessionProxies.RuntimeName = $Name
-    $SessionProxies.InitializerScript = $InitializerScript
+    $SessionProxies.Factory = $Factory
     
     $Runspace = [System.Management.Automation.Runspaces.RunspaceFactory]::CreateRunspace( $Host )
     $Runspace.ApartmentState = "STA"
@@ -63,6 +63,9 @@ function global:Initialize-AsyncRuntime{
         
         # Since application loops can't add to this scope, providing a scope hashtable to make do
         $Scope = @{}
+
+        $local:InitializerScript = $Factory
+        $Factory = $null
 
         $Runtimes[ $Name ].Dispatcher = Invoke-Command $InitializerScript
         $Runtimes[ $Name ].Ready = $true

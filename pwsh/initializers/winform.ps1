@@ -1,4 +1,4 @@
-Initialize-AsyncRuntime -Name "WinForm" -InitializerScript {
+Initialize-AsyncRuntime -Name "WinForm" -Factory {
 
     Invoke-Command $PostDispatcher -ArgumentList @( [System.Windows.Threading.Dispatcher]::CurrentDispatcher ) | Out-Null
 

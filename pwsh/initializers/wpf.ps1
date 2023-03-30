@@ -1,4 +1,4 @@
-Initialize-AsyncRuntime -Name "WPF" -InitializerScript {
+Initialize-AsyncRuntime -Name "WPF" -Factory {
     
     $App = [System.Windows.Application]::new()
 
