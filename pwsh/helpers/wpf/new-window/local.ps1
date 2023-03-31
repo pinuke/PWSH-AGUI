@@ -7,9 +7,17 @@ $Runtimes[ "WPF" ].Dispatcher.InvokeAsync( [System.Action]$Remote ).Wait() | Out
 
 function global:New-WPFWindow{
     param(
-        [Parameter(Mandatory=$true)]
-        [string] $Xaml
+        [string] $Xaml,
+        [string] $Path
     )
+
+    if ( !$Path -and !$Xaml ) {
+        throw [System.ArgumentException]::new('Either Path or Xaml must be specified', 'Path')
+    }
+
+    If ( $Path ) {
+        $Xaml = Import-Contents -Path $Path
+    }
 
     $Script = [scriptblock]::Create(@"
 

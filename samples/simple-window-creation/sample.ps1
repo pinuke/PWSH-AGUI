@@ -6,6 +6,6 @@ $SampleDir = Resolve-Path "$Root/samples/simple-window-creation"
 
 . "$Root/pwsh/main.ps1"
 
-New-WinFormWindow -Script (Import-Contents "$SampleDir/pwsh/winform.ps1" -As ScriptBlock)
-New-WPFWindow -Xaml (Import-Contents "$SampleDir/xaml/wpf.xaml" )
-New-AvaloniaWindow -Xaml (Import-Contents "$SampleDir/xaml/avalonia.xaml" )
+New-WinFormWindow -Path "$SampleDir/pwsh/winform.ps1"
+New-WPFWindow -Path "$SampleDir/xaml/wpf.xaml"
+New-AvaloniaWindow -Path "$SampleDir/xaml/avalonia.xaml"
