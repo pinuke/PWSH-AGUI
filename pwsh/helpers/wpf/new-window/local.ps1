@@ -2,7 +2,7 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
     If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../../../.." } else { Resolve-Path "./../../../.." }
 }
 
-$Remote = [scriptblock]::Create(( Import-Contents -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" ))
+$Remote = Import-Contents -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" -As ScriptBlock
 $Runtimes[ "WPF" ].Dispatcher.InvokeAsync( [System.Action]$Remote ).Wait() | Out-Null
 
 function global:New-WPFWindow{
