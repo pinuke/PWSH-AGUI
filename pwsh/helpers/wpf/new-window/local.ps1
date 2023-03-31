@@ -2,14 +2,22 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
     If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../../../.." } else { Resolve-Path "./../../../.." }
 }
 
-$Remote = [scriptblock]::Create(( Import-Contents -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" ))
+$Remote = Import-Contents -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" -As ScriptBlock
 $Runtimes[ "WPF" ].Dispatcher.InvokeAsync( [System.Action]$Remote ).Wait() | Out-Null
 
 function global:New-WPFWindow{
     param(
-        [Parameter(Mandatory=$true)]
-        [string] $Xaml
+        [string] $Xaml,
+        [string] $Path
     )
+
+    if ( !$Path -and !$Xaml ) {
+        throw [System.ArgumentException]::new('Either Path or Xaml must be specified', 'Path')
+    }
+
+    If ( $Path ) {
+        $Xaml = Import-Contents -Path $Path
+    }
 
     $Script = [scriptblock]::Create(@"
 
