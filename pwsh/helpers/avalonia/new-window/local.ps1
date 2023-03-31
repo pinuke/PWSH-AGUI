@@ -8,24 +8,31 @@ $Runtimes[ "Avalonia" ].Dispatcher.InvokeAsync( [System.Action]$Remote ).Wait() 
 function global:New-AvaloniaWindow{
     param(
         [string] $Xaml,
-        [string] $Path
+        [string] $Path,
+        [scriptblock] $Script
     )
 
-    if ( !$Path -and !$Xaml ) {
-        throw [System.ArgumentException]::new('Either Path or Xaml must be specified', 'Path')
-    }
+    If( $Script ) {
+        $Script = [scriptblock]::Create( $Script.ToString() )
+    } else {
 
-    If ( $Path ) {
-        $Xaml = Import-Contents -Path $Path
-    }
+        if ( !$Path -and !$Xaml ) {
+            throw [System.ArgumentException]::new('Either Path or Xaml must be specified', 'Path')
+        }
 
-    $Script = [scriptblock]::Create(@"
+        If ( $Path ) {
+            $Xaml = Import-Contents -Path $Path
+        }
+
+        $Script = [scriptblock]::Create(@"
 
 Invoke-Command `$Scope["New-Window"] -ArgumentList `@`"
 $Xaml
 `"`@
 
 "@)
+
+    }
 
     $Runtimes[ "Avalonia" ].Dispatcher.InvokeAsync( [System.Action]$Script )
     # Returns the ITask so that the dispatch can be awaited
