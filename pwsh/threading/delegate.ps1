@@ -2,7 +2,7 @@ function global:Invoke-Delegate{
     param(
         [Parameter(Mandatory=$true)]
         [string] $Runtime,
-        [scriptblock] $Delegate,
+        $Delegate,
         [string] $Path,
         [switch] $Sync
     )
@@ -13,6 +13,8 @@ function global:Invoke-Delegate{
 
     If ( $Path ) {
         $Delegate = Import-Contents -Path $Path -As ScriptBlock
+    } elseif ( $Delegate.GetType() -notin [string],[scriptblock] ) {
+        throw [System.ArgumentException]::new( 'Delegate must be a string or scriptblock', 'Delegate' )
     } else {
         $Delegate = [scriptblock]::Create( $Delegate.ToString() )
     }
@@ -20,7 +22,7 @@ function global:Invoke-Delegate{
     $Task = $Runtimes[ $Runtime ].Dispatcher.InvokeAsync( [System.Action]$Delegate )
 
     if ( $Sync ) {
-        $Task.Wait()
+        $Task.Wait() | Out-Null
     } else {
         $Task
     }
