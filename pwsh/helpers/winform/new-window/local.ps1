@@ -8,13 +8,15 @@ function global:New-WinFormWindow{
         throw [System.ArgumentException]::new('Either Path or Script must be specified', 'Path')
     }
 
+    $Params = @{ "Runtime" = "WinForm" }
+
     if ( $Path ) {
-        $Script = Import-Contents -Path $Path -As ScriptBlock
+        $Params.Path = $Path
     } else {
-        $Script = [scriptblock]::Create( $Script.ToString() )
+        $Params.Delegate = $Script
     }
 
-    $Runtimes[ "WinForm" ].Dispatcher.InvokeAsync( [System.Action]$Script )
     # Returns the ITask so that the dispatch can be awaited
+    Invoke-Delegate @Params
 
 }
