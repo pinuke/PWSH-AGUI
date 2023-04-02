@@ -1,7 +1,3 @@
-$Root = If ( $TestRoot ) { $TestRoot } else {
-    If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../.." } else { Resolve-Path "./../.." }
-}
-
 $global:Runtimes = [System.Collections.Hashtable]::Synchronized(@{})
 
 function global:Initialize-AsyncRuntime{
