@@ -2,8 +2,10 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
     If ( $PSScriptRoot ) { Resolve-Path "$PSScriptRoot/../../../.." } else { Resolve-Path "./../../../.." }
 }
 
-$Remote = Import-Contents -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" -As ScriptBlock
-$Runtimes[ "WPF" ].Dispatcher.InvokeAsync( [System.Action]$Remote ).Wait() | Out-Null
+Invoke-Delegate `
+    -Runtime "Avalonia" `
+    -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" `
+    -Sync
 
 function global:New-WPFWindow{
     param(
@@ -12,8 +14,10 @@ function global:New-WPFWindow{
         [scriptblock] $Script
     )
 
+    $Params = @{ "Runtime" = "WPF" }
+
     If( $Script ) {
-        $Script = [scriptblock]::Create( $Script.ToString() )
+        $Params.Script = $Script
     } else {
 
         if ( !$Path -and !$Xaml ) {
@@ -24,17 +28,16 @@ function global:New-WPFWindow{
             $Xaml = Import-Contents -Path $Path
         }
     
-        $Script = [scriptblock]::Create(@"
+        $Params.Script = @"
     
 Invoke-Command `$Scope["New-Window"] -ArgumentList `@`"
 $Xaml
 `"`@
 
-"@)
+"@
 
     }
-
-    $Runtimes[ "WPF" ].Dispatcher.InvokeAsync( [System.Action]$Script )
     # Returns the ITask so that the dispatch can be awaited
+    Invoke-Delegate @Params
 
 }
