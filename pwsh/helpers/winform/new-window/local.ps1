@@ -13,7 +13,7 @@ function global:New-WinFormWindow{
     if ( $Path ) {
         $Params.Path = $Path
     } else {
-        $Params.Script = $Script
+        $Params.Delegate = $Script
     }
 
     # Returns the ITask so that the dispatch can be awaited

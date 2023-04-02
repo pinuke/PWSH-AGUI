@@ -17,7 +17,7 @@ function global:New-WPFWindow{
     $Params = @{ "Runtime" = "WPF" }
 
     If( $Script ) {
-        $Params.Script = $Script
+        $Params.Delegate = $Script
     } else {
 
         if ( !$Path -and !$Xaml ) {
@@ -28,7 +28,7 @@ function global:New-WPFWindow{
             $Xaml = Import-Contents -Path $Path
         }
     
-        $Params.Script = @"
+        $Params.Delegate = @"
     
 Invoke-Command `$Scope["New-Window"] -ArgumentList `@`"
 $Xaml
