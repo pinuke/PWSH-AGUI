@@ -6,7 +6,7 @@ Initialize-AsyncRuntime -Name "WPF" -Factory {
         # Workaround: shutdown and restart the application.
         [System.Windows.Application]::Current.Dispatcher.InvokeAsync([System.Action]{
             [System.Windows.Application]::Current.Shutdown()
-        }) | Out-Null
+        }).Wait() | Out-Null
     }
 
     $App = [System.Windows.Application]::new()
