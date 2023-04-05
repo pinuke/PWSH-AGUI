@@ -5,7 +5,7 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
 Invoke-Delegate `
     -Runtime "WPF" `
     -Path "$Root/pwsh/helpers/wpf/new-window/remote.ps1" `
-    -Sync
+    -Sync | Out-Null
 
 function global:New-WPFWindow{
     param(

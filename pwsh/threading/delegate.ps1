@@ -22,7 +22,7 @@ function global:Invoke-Delegate{
     $Task = $Runtimes[ $Runtime ].Dispatcher.InvokeAsync( [System.Action]$Delegate )
 
     if ( $Sync ) {
-        $Task.Wait() | Out-Null
+        $Task.GetAwaiter().GetResult()
     } else {
         $Task
     }

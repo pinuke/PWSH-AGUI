@@ -5,7 +5,7 @@ $Root = If ( $TestRoot ) { $TestRoot } else {
 Invoke-Delegate `
     -Runtime "Avalonia" `
     -Path "$Root/pwsh/helpers/avalonia/new-window/remote.ps1" `
-    -Sync
+    -Sync | Out-Null
 
 function global:New-AvaloniaWindow{
     param(
